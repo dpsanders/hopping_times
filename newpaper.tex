@@ -1,0 +1,1617 @@
+%\documentclass[letterpaper,10pt, jcp, aps]{revtex4-1}
+\documentclass[superscriptaddress,pre,reprint,showpacs,twocolumn]{revtex4-1}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{graphicx}
+\usepackage{natbib}
+\usepackage{caption}
+\usepackage{subcaption}
+%\usepackage{authblk} parece ser que ya esta metido cuando usas preprint
+
+\usepackage{hyperref}
+
+
+%\bibliographystyle{alpha}
+
+%opening
+
+%\author{Rosa Rodríguez \& David P.~Sanders \& W. P. K. Zapfe}
+%\affil{Departamento de Física, Facultad de Ciencias, Universidad Nacional Autónoma de México, Ciudad Universitaria, Del.~Coyoacán, México D.F. 04510, Mexico}
+
+\usepackage{mathptmx}
+% I dont know if that package is compatible with revtex.
+
+\newcommand{\defeq}{:=}
+\newcommand{\mean}[1]{\left \langle #1 \right \rangle}
+\newcommand{\rd}[1]{\mathrm{d}{#1} \,}
+\newcommand{\sumprod}[1]{\mathbf{P}_{#1} \,}
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\vv}{\mathbf{v}}
+\newcommand{\indicatorsymbol}{\mathbf{1}}
+\newcommand{\indicator}[1]{\indicatorsymbol_{ \{   #1 \} } } 
+\newcommand{\etal}{et al.\ } 
+
+
+\setlength{\parskip}{10pt}
+\setlength{\parindent}{0pt}
+
+
+\begin{document}
+
+\title{Exact hopping and collision times for two hard balls in a box}
+
+\author{Rosa Rodríguez}
+\email{rosa.g.asor@gmail.com }
+\affiliation{Physics Department, McGill University}
+
+\author{David P.~Sanders}
+\email{dpsanders@ciencias.unam.mx}
+\affiliation{Departamento de Física, Facultad de Ciencias, Universidad Nacional Autónoma de México, Ciudad Universitaria, Ciudad de México 04510, Mexico}
+
+\author{W.~P.~Karel Zapfe}
+\email{karelz@cinvestav.mx}
+\affiliation{Departamento de Física, Facultad de Ciencias, Universidad Nacional Autónoma de México, Ciudad Universitaria, Ciudad de México 04510, Mexico}
+
+\affiliation{CINVESTAV-IPN, Mexico}
+
+
+\begin{abstract}
+We study the molecular dynamics of two balls undergoing hard collisions in a rectangular box.
+Using a mapping to a billiard model and a key result from ergodic theory, we obtain exact expressions for mean times between different classes of events:
+hops, i.e. horizontal or vertical interchanges of the particles; wall collisions; and disc collisions.
+To do so, we calculate
+volumes and cross-sectional areas in the 2n-dimensional configuration space.
+We compare exact analytical results against Monte Carlo simulations, with excellent agreement.
+\end{abstract}
+
+\maketitle
+
+
+
+\section{Introduction}
+
+%\typeout{`` this is ``  \the\columnwidth }
+
+Collision times play a fundamental role in statistical mechanics, since properties
+such as mixing, reaction and diffusion rates depend on them \cite{Boltz72, Tolman, VanKampen}.
+A paradigmatic model, introduced by Boltzmann almost 150 years ago \cite{Boltz72, SzaszBook00},
+consists of a fluid of hard spheres colliding with one other, either in a periodic torus or in
+a rectangular box.
+
+The simplest such system that is non-trivial is that of two balls in a box.
+The balls move rectilinearly until they undergo
+elastic collisions, either with a wall of the box, or with one another; this has been called ``inertial motion'', to distinguish it from Brownian motion \cite{Bowles04}.
+Phenomena such as transport, collision and reaction
+have been studied in this systems, both analytically 
+ \cite{Awazu01, Munakata02, Suh05} and numerically \cite{MacElroy2004, MacElroy2005}.
+ Events of physical interest in this system are \emph{hopping},
+in which two particles interchange position along some choosen axis,
+and \emph{collisions} of the particles, with the box or with one other.
+%Hopping plays an important role in the dynamics of confined fluids, for example
+%REF.
+
+ 
+Previous work in the 2 dimensional case
+by Bowles \etal gives general quantitative results for hopping times 
+for both inertial and Brownian dynamics \cite{Bowles04}. They focus
+on the mean \emph{first-passage} time, using arguments from transition state theory 
+to provide expressions for the general behavior of these quantities, as a function of the
+disc radii. %Their results show the adequate algebraic behavior.
+Further work has expanded along that line  \cite{Suh05, Ball09}.
+There is also a statistical thermodynamic treatment by Munakata \etal, 
+who study the partition function, pressure,
+and temperature in the system \cite{Munakata02, Munakata06}. 
+
+
+In this paper we obtain \emph{exact} analytical expressions, not for the first passage time,
+but rather for mean inter-hop and inter-collision times of two discs under 
+inertial (Newtonian) motion, as a function of the geometrical parameters of the system. Such a treatment is possible
+ since the dynamics of $N$ hard discs in $d$ spatial dimensions
+ is equivalent to a \emph{billiard model} in the $Nd$-dimensional configuration space, i.e. a \emph{single} point particle colliding elastically 
+with suitable objects (``scatterers'') \cite{SzaszBook00}. 
+In particular, the system of two discs in a box is hyperbolic (chaotic) and ergodic when the discs are able to pass each other \cite{Sim99}. Otherwise, the system decomposes itself into
+a finite number of disjoint ergodic components (two or four), which are each still hyperbolic.
+
+We can thus apply a key result from ergodic theory on mean collision times \cite{Chernov97} to obtain analytical expressions 
+for times between hops, between wall collisions, and between disc collisions; these are verified numerically. 
+In certain asymptotic regimes, we recover previously obtained power-law exponents \cite{Bowles04}.
+
+The main difficulty in the analysis is correctly accounting for several geometric factors with different origins in both the
+analytical and numerical calculations. The most complicated step occurs when the configuration space
+suffers a first derivative discontinuity in its formula. We where able to generalize somewhat
+the cross section formulas, but a analytical closed expression that covers all cases seems
+dificult to obtain for an arbitrary number of dimensions. 
+
+
+%The previous  results on
+%inertial dynamics can be extended  by particularizing 
+%exact expressions for the mean return times (MRT). 
+%We shall  obtain them through application of 
+%Machta and Zwanzig formula for residence times \cite{MachtaZwan} ??
+%We shall also  compare \emph{mean event times} with 
+%\emph{mean first event times} (MFET),
+%and give some arguments to explain the agreement between the two. 
+%Brownian dynamics shall be discussed elsewhere \cite{WorkInProgress}.
+%We shall also provide this paper with supplementary material 
+%detailing the calculations. 
+
+
+\section{Model: Two hard discs in a rectangular box}
+
+We consider two hard n-dimensional balls  with equal radius $r$,
+moving inside a box of sizes $h=(h_1, \ldots , h_n )$; see Fig.~\ref{billar01}. 
+The balls move inertially in the absence of forces, 
+following straight line trajectories,
+and undergo elastic collisions with one 
+other and with the walls of the box.
+
+\begin{figure}[h]
+  \begin{center}
+    \includegraphics[width=0.40\textwidth]{figures/DiscsBox01.pdf}
+  \end{center}
+  \caption{The billiard and its parameters. Coordinates
+    have their origin at the geometrical center of the 
+    billiard table.}\label{billar01}
+\end{figure}
+
+
+We call the first ball $X$ and its coordinates $ x=(x_1,ldots,x_n)$,
+the second ball shall be called $Y$ and its coordinates correspindingly.
+The velocities shall be  $\mathbf{v} = (v_j)$ and $\mathbf{u} = (u_j)$. 
+Their centers are restricted to the region 
+$x_j \in [-a_j,a_j] $, where 
+$a_j \defeq a_j(r) \defeq \frac{h_j}{2} - r $.
+
+The exclusion condition preventing the balls from overlapping is $ \sum_i (x_i-y_i)^2  \ge (2r)^2$.
+It is thus useful to consider center of mass and relative coordinates:
+\begin{equation}\label{cambiocoor01}
+ \begin{aligned}
+z_j & = x_j -y_j \\
+w_j & = \frac{x_j +y_j}{2} .
+  \end{aligned}
+\end{equation}
+
+In these coordinates, the configuration space is given by the following
+intervals:
+$z_j \in [-2a_j , +2a_j]$, and
+$w_j \in [-a_j + |z_j|/2, a_j - |z_j|/2]$.
+The non-overlapping constraint becomes $\sum z_j^2 \ge 4 r^2$.
+
+
+If we take $n=2$, we can visualize somewhat how the
+configuration space is: the constraints define a four-dimensional
+rectangular prism, in which is embedded an excluded cylinder with a three-dimensional surface
+(codimension 1).
+This cylinder has radius $r\sqrt{2}$ and lies
+on a diagonal between the $z$ and $w$ axes.
+The prism surface is the outer boundary of the configuration space,
+while the cylinder is an excluded volume, the surface of which
+acts as a reflecting inner boundary.
+The dynamics of the two balls is
+equivalent to a billiard model in this 4-dimensional space, in which 
+a point particle undergoes free flight until
+it hits a wall, where it undergoes an elastic reflection.
+The outer boundaries are flat, so the
+hyperbolicity is due to the inner semi-dispersing
+boundary \cite{Sim99}, which corresponds to the collision of
+the two balls.
+
+
+We take the mass of each disk as $m=1$, so that the kinetic energy
+is $\frac{1}{2}(\mathbf{v}^2 + \mathbf{u}^2)$. We restrict attention to the energy surface with
+$E = \frac{1}{2}$, so that the disc velocities satisfy $\mathbf{v}^2 + \mathbf{u}^2 = 1$.
+Other values of the mass or energy correspond to a simple rescaling of the dynamics, with velocities differing
+by a factor of
+$\sqrt{2E/m}$, and corresponding factors in the times to be determined below.
+
+
+
+
+\section{Mean collision time for billiard models}
+
+\label{knownfacts}
+%\subsection{Known facts on collision rates}
+
+A system of $N$ hard spheres confined by hard walls in a $d$-dimensional
+space may be treated as a billiard system 
+in which a single point  particle undergoes free motion between reflecting obstacles 
+in a $ (d N) $-dimensional configuration space \cite{Sinai70, Sim99, MarkChern}. 
+%If the resulting billiard is ergodic and hyperbolic, then we know that
+%these systems are equivalent to Bernoulli flows \cite{Gallavotti74}.
+This can be thought of as a mean return time to the $(d-1)$-dimensional 
+(i.e. co-dimension $1$) cross-section given by the wall boundaries.
+
+For a particle with unit velocity moving in a general billiard table, there is 
+an exact expression for the mean time between 
+collisions of the particle with a given wall \cite{Chernov97}:
+
+\begin{equation}\label{meanfreetime}
+ \mean{\tau} = \frac{|Q|}{|A|} \cdot \frac{|S^{d-1}|} {|B^{d-1}|} \cdot \frac{1}{s}.
+\end{equation}
+
+
+Here, $|Q|$ denotes the $d$-dimensional volume of the available 
+space in the billiard and 
+$|A|$ the $(d-1)$-dimensional area of the cross-section.
+ $|S^{d-1}|$ is the $(d-1)$-dimensional area of the unit sphere in $\RR^d$, given by
+\begin{equation}
+  |S^{d-1}| = \frac{2 \pi^{d/2}}{\Gamma(d/2)},
+\end{equation}
+where $\Gamma(\cdot)$ is the gamma function. 
+$|B^{d-1}|$ is the volume of the unit ball 
+in $\RR^{d-1}$, given by $|B^{d-1}| = |S^{d-2}| / (d-1)$.
+The extra factor $1/s$ involves the ``sidedness'' factor, explained below.
+Note that Machta and Zwanzig \cite{MachtaZwan} used a similar method to derive an escape 
+time across a virtual boundary by treating it as a recurrence time.
+
+
+In our case, we are interested in the mean return time to 
+several types of co-dimension-$1$ cross section.
+The first, giving the ``hopping time'', 
+is defined by the moment
+at which the discs interchange their position along some axis, i.e.
+when they cross a surface defined by
+\begin{equation} \label{condhop}
+x_j = y_j 
+\end{equation}
+At such an event, the cross-section can be hit from \emph{either} side,
+e.g., the disk 1 can be traveling from left to right or the other way around
+at the moment when the interchange of positions take place. 
+The area $A$ of the surface is, then, 
+ is effectively twice as large; this will be given by a ``sidedness'' factor $s=2$ in the formula
+for $\mean{\tau}$.
+
+The other events of interest correspond to collisions of a specific
+ball with a specific wall, and the mutual collision between the two balls.
+In both of these cases, the collision surface can be reached only from one side, corresponding to $s = 1$.
+
+To calculate the mean times of interest, it is thus necessary to calculate
+the $2n$-dimensional volume $V$ of the available space, and the $2n-1$-dimensional cross-sectional area $A$ 
+for each event of interest. As we shall see there are two difficulties here.
+The first one is accounting for multiplicative factors. The other is accounting for
+the case in which the ``exclusion cylinder'' touches or crosses one of the borders of
+the configuration space. This corresponds to the two balls not being able to fit
+side to side in one particular dimension, that is, there is at least one $j$ for
+which $r>h_j/4$. This doesn't mean that the space is disjoint, but that can also
+happen, which makes calculations even more difficult.
+
+\section{Calculation of volume and areas}
+
+The configuration space is a $2n$ dimensional rectangular box
+that has a sort of cylinder substracted from it, the
+product of a ball defined in relative coordinates by
+\begin{equation}
+  \sum_j z_j^2 \leq 4 r^2,
+\end{equation}
+and the linear center of mass coordinates.
+
+
+
+\subsection{Volume of available space}
+
+We shall sketch here the calculations for the volume and cross section areas
+of configuration space. The detailed derivations are as complementary material.
+We denote by $Z := \{ \mathbf{x} \in \mathbb{R}^{2n}: \sum (x_j-y_j)^2 \ge (2r)^2 \}$,
+the complement of the cylinder in the configuration space.
+We shall denote $Z^C$ the complement of such set \emph{inside} the rectangular
+box defined by the cartesian product of all $[-a_j, a_j ]$ intervals.
+The volume of the box is easy to calculate, so we shall only deal with
+the volume (or cross area) inside the cylinder. That is, $V$ is the volume of
+our interest, and $V_{box}$ the volume of the rectangular box, and $V_{exc}$ the
+excluded cylinder:
+\begin{equation}
+V = V_{box} - V_{exc}
+\end{equation}
+with
+\begin{equation}
+V_{box} =  \prod_{j=1}^n \int_{-a_j}^{a_j} dx_j \int_{-a_j}^{a_j}  dy_j = \prod_{j=1}^n (2 a_j)^2 
+\end{equation}
+and
+\begin{equation}
+V_{exc} =  \prod_{j=1}^n \int_{-a_j}^{a_j} dx_j \int_{-a_j}^{a_j}  dy_j  \indicator{Z^C}
+\end{equation}
+We change to
+the center of mass and relative coordinates defined in \eqref{cambiocoor01}:
+
+In terms of these coordinates the exluded volume is 
+\begin{align}
+V_{exc} & =  \prod_{j=1}^n \int_{-2a_j}^{2a_j} dz_j \int_{-a_j + \frac{|z_j|}{2}}^{a_j - \frac{|z_j|}{2}}  dw_j  \indicator{Z^C} \\
+& = \int_{-2a_1}^{2a_1} dz_1 (2a_1 -|z_1|)  \ldots \int_{-2a_n}^{2a_n} dz_n (2a_n - |z_n|)  \mathbf{1}_{Z^C} 
+\end{align}
+
+To simplify the notation we define the following operators
+\begin{equation}
+\hat{O}_j  = \int_{-2 a_j}^{2 a_j} dz_j \left( 2a_j -|z_j| \right), 
+\end{equation}
+so that
+\begin{equation}\label{voloper}
+V_{exc} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C}
+\end{equation}
+
+Recall that the dimensions $a_j$ of the available configuration space are functions of the disc radius $r$, 
+but we suppress this explicit dependence for simplicity.
+
+For each dimension $j$, there are two possible cases $a_j \geq r$ or $a_j < r$. In the first case, the two spheres fit completely along the $j$ dimension. In the second one, only one of the spheres fit along the $j$ dimension. We where able to arrive at
+exact expressions for the case when none or only one dimension where so small that
+the balls did not fit side by side along it. In the Supplementary Material we
+show the general derivation, but here we show the key results.
+We shall encounter many times the sum of products of subsets of a certain size,
+so it is convenient to designate them by a specific symbol.
+Let us consider a subset of size $m$ of the indices $\{1,\ldots, n\}$
+ that label the dimensions. We call the sets of all subsets of indices of
+ cardinality $m$ $C_m$. Then we shall introduce the following variations
+ of the sum of products symbol:
+
+ \begin{equation}
+   \begin{aligned}
+   \sumprod{m}(\mathbf{a}) & = \sum_{A \in C _m } \prod_{ l \in A } a_l \\
+   \sumprod{m} (\mathbf{a}; j\neq k) & =
+   \sum_{\substack{A \in  C _m \\ a_k \notin A} } \prod_{ l \in A } a_l
+   \end{aligned}
+ \end{equation}
+The last expression is the sum of products of subsets omiting the
+value $a_k$. 
+
+The general Volume for the case that the balls fit side by side in all directions is
+\begin{align}
+V_{exc}  & =  \sum_{m=0}^{n}
+ \frac{ (-1)^{m} 2^{n-m} \pi^\frac{n-m}{2}}{\Gamma \left( \frac{n+m + 1}{2}\right)} \left(2r\right)^{m+n}
+ \mathbf{P}_{n-m}(\mathbf{a})
+\end{align}
+
+In two dimensions this gives back the result of Munakata and Hu \cite{Munakata02}.
+\begin{equation}
+V_\text{exc} = 16 \pi a_1 a_2 r^{2} - \textstyle \frac{64}{3} (a_1+a_2) r^{3}  + 8 r^{4}
+\end{equation}
+
+In this particular case, we were also able to calculate the case when the balls
+did not fit into one or both directions side by side,
+see Fig.~\ref{CasosIntegra} in the appendix. 
+
+For 2 dimensions, 
+consider the case  in which vertical hopping is possible
+and horizontal is excluded, with  $h_1 \geq h_2$.
+This case divides into two sub-cases: if
+$ h_1 \leq  h_2 < 2 h_1 $,
+there is a value of $r$ above which hopping is no longer possible,
+but the discs still fit in the table. For $2 h_1 \leq h_2 $, vertical hopping is
+possible until $ 2 r= h_1$ (where vertical movement becomes impossible). 
+The configuration space splits into disjoint components, but 
+thanks to the symmetry of
+the problem, in some cases the cross-section areas and 
+volumes become disjoint components sharing the same fraction of
+the total volume, making the transition continuous. In other cases, we end with 
+a discontinuity in the formulas,
+corresponding to a factor of 2 or 4. 
+
+
+For example, when $h_1/4 < r < h_2/4$ 
+we define an auxiliary variables, $a=a_1, b=a_2$
+and
+$c = \sqrt{4r^2-b^2}$. Then we have
+\begin{multline}\label{VolumenCasoFeo}
+V_{h_1/4<r<h_2/4} = 32abr^2 \left[ \arccos(b/2r)-\arccos(a/2r) \right]\\
++\frac{64 r^3}{3 } \left[ a((b-a)/2r)-b(c/2r+\sqrt{4r^2-a^2}/2r) \right]\\
++16 \left[ a b^2 c (4\sqrt{2}-1-\sqrt{2}/3) 
+  +c^2b^2 (\sqrt{2}/3-1) \right]\\
+-2r^2 (b^2-a^2)
+\end{multline}
+
+In the general n-dimensional case we have an expresion for when the balls
+do not fit side by side just in one direction (see Sup. Mat.).
+
+For our numerical simulations, we take $h_1=1.5$, $h_2=1$ and for 3d, $h_3=1.75$,
+which avoids degenerate cases. 
+This covers all of the uses of the general volume formulas.
+Otherwise there is a case in which both hops become impossible simultaneously
+(e.g. $h_1=h_2$), or cases in which one of them never gets excluded (e.g. $h_2>2h_1$).
+
+
+We have checked this result with standard rejection-sampling Monte Carlo simulations, 
+by generating uniform random positions for the disc centers in 
+$[-a_1,a_1] \times [-a_2,a_2]$ and 
+counting the fraction of initial conditions for 
+which the two discs do not overlap (rejecting those where is overlap); the results are shown in Fig.~\ref{VolMonteC}.
+
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{./figures/freevolume01.pdf}
+\caption{Free available volume in configuration space for 2d case,
+  as function of radius. The
+  line labeled $rhmax$ is the limit for horizontal hopping, and the one labeled
+  $rvmax$ is the limit for vertical hopping. The transition between the formulas
+is continuous.}
+\label{VolMonteC}%% 
+\end{figure}
+
+
+\subsection{Cross-section areas}\label{areas}
+
+The terms of the form $|A|$ in \eqref{meanfreetime} are surface areas of
+$2n-1$-dimensional surfaces (manifolds) $S$ embedded in the configuration space,
+defined by algebraic equations of the form $g(\mathbf{x}, \mathbf{y}) = 0$,
+so that $S = g^{-1}(0)$ is the zero set of $g$.
+The surface area of $S$ is then given by
+\begin{equation}
+  A(S) = \int \indicatorsymbol_Z(\mathbf{x ,y}) \delta(g(\mathbf{x, y}))
+   \rd{\mathbf{x}} \rd{\mathbf{y}}.
+\label{eq:surface-area}
+\end{equation}
+To evaluate this, we use the following coarea formula
+\cite[section 6.1]{Hormander83} 
+\begin{equation}
+\int_{\mathbf{R}^d} f(\mathbf{x,y}) \, \delta(g(\mathbf{x,y})) \, \rd{d} \mathbf{x} = \int_{g^{-1}(0)}\frac{f(\mathbf{x})}{\| \mathbf{\nabla}g(\mathbf{x}) \|} \, \rd{S},
+\label{eq:surface-dirac}
+\end{equation}
+where the integral on the right-hand side is over the surface $g^{-1}(0)$
+\cite{Zappa2018}
+
+The appearance of the normalization factor $\| \mathbf{\nabla}g(\mathbf{x}) \|$ can be understood intuitively by considering how to verify numerically these surface areas. One possible technique is to use rejection sampling to sample the volume given by $|g(\mathbf{x})| \le \eta$ for some small value of $\eta$. Points will be accepted or rejected according to their orthogonal distance to the surface, which is the factor in the denominator in the above expression. Our case is simple in this respect: most of our surfaces are either parallel to the coordinates or are in some way ``diagonal'', giving constant factors
+%$| \mathbf{\nabla}g(\mathbf{x}) \| )\sqrt{2}$ constant for all points. 
+The main difficulty in these calculations is correctly accounting for the factors arising in this way.
+
+The procedure was to start from expression \eqref{voloper} and put a Dirac Delta
+in the integrand, so that we started allways ffrom expressions of the following
+form:
+\begin{equation}\label{areagral}
+A_{g} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C} \delta(g(\mathbf{x, y}))
+\end{equation}
+
+\subsubsection{Hopping}
+
+Let us start with the 2 dimensional case, with $h_1 > h_2$:
+Vertical hopping occus when the vertical positions of the two discs are equal: $x_2 - y_2=0$. In the language of the previous subsection, we take
+ $g_\mathrm{hop}(x_1, x_2, y_1, y_2)= x_2 - y_2$, with gradient  $\nabla g_\mathrm{hop}(\mathbf{x}) = (0, 1, 0, -1)$, so that $ \| \nabla g_\mathrm{hop}(\mathbf{x}) \| = \sqrt{2}$. 
+This results in the following expression:
+\begin{widetext}
+\begin{equation}
+  A_\text{hop} =
+\iiiint
+\limits_{\substack{x_1, y_1 = -a_1 \\ x_2, y_2 = -a_2}}^{\substack{x_1, y_1 = a_1 \\ x_2, y_2 = a_2}}
+\rd x_1 \rd x_2 \rd y_1 \rd y_2 
+ \, \indicator{ (x_1-y_1)^2 + (x_2-y_2)^2 \ge (2r)^2 } \, \delta \big(\frac{x_2-y_2}{\sqrt{2}}\big).
+\end{equation}
+\end{widetext}
+In this case the same result applies for the case that
+horizontal hopping is possible or excluded, that is,
+the case where the balls fit side to side vertically or not.
+The finnal expression is:
+ \begin{equation}\label{AreaH}
+ A_\text{hop}  =  16 \sqrt{2} a_2(a_1-r)^2.
+ \end{equation}
+
+Now, for the general n-dimensional case, we have the following
+expression for the case that all hoping is possible.
+Without loss of generality, the hopping here is on the first axis.
+\begin{equation}
+  \begin{split}
+    A_{hop,n}  = & 2^{2n-1}\sqrt{2}a_1\prod_{j=2}^n a_j^2-A_{exc,n} \\
+      = & 2 \sqrt{2}a_1 (V_{tot,n-1} - V_{exc,n-1})
+  \end{split} 
+\end{equation}
+
+Monte Carlo simulations to calculate this area must also
+take into account the factor $\sqrt{2}$ (see Appendix B).
+In this case we counted the proportion of successful placements of hard discs 
+for which the distance 
+$|x_2 - y_2|$ was within a small tolerance of $0$. 
+Results are shown in figure \ref{AreaHopp01}.
+
+
+%% CAMBIAR ESTA FIGURA, SE PUEDE HASTA r=0.375$
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.45\textwidth]{./figures/areaHopvertical01.pdf}
+\caption{The hopping area, $A_\text{hop}$, 
+  indicated in the formula in eq. \ref{AreaH}. As explained in the text
+in the text, the formula does not apply for $r>1/4$, but numerical values correctly
+remain at zero.}
+\label{AreaHopp01}
+\end{figure}
+
+
+\subsubsection{Disc collisions}
+
+
+The area which represents collisions between the two discs is the surface area of the cylinder
+that lies within the prism, given by
+$f(x,y) = \sqrt{\sum_j (x_j-y_j)^2} -2r=0$.
+Notice that here the Indicator Function for $Z$ is irrelevant, as
+the Dirac Delta is valuated exactly on the border of the border
+of such set. We do not deal whith an Excluded and Free expresion pair.
+ We found integral expressions for
+arbitrary number of dimensions, even if the balls do not fit
+together in one axis.
+For $r<h_j \forall j$, the integral expression is:
+\begin{equation}
+  \begin{split}
+  A_{c} & =  \prod_{j=1}^n\int_{-\sqrt{2}a_j}^{\sqrt{2}a_j} \rd{z_j}
+  \int_{-\sqrt{2}a_j+|z_j|}^{\sqrt{2}a_j-|z_j|} \rd{w_j}
+  \delta (\sqrt{2 \sum_j (z_j)^2} - (2r)) \\
+  & = 2^n \prod_{j=1}^n\int_{-\sqrt{2}a_j}^{\sqrt{2}a_j} \rd{z_j}
+  \prod_k^n(\sqrt{2} a_k -|z_k|)
+  \delta (\sqrt{2 \sum_j (z_j)^2} - (2r))
+  \end{split}
+\end{equation}
+In the case where all positions are avaible for the balls, we can solve
+the integral:
+\begin{equation}
+  A_{c}=  2^{2n+1/2} \sum_{k=0}^{n} (-1)^k
+  \frac{\pi^{n/2-k/2} r^{k+n-1}}{\Gamma(k/2+n/2)}
+  \sumprod{n-k}(\mathbf{a}) 
+\end{equation}
+In three dimensions
+this resolves into
+\begin{equation}
+   \begin{split}
+     A_{c}=64 \sqrt{2} \big( 2 \pi r^2 a_1a_2a_3 
+      -\pi r^3 (a_1a_2 +a_2a_3 + a_3 a_1) \\
+  +4r^4/3 (a_1+a_2+a_3)
+  -r^5/2 \big).
+  \end{split}
+\end{equation}
+In two dimensions is:
+\begin{equation}\label{AreaChoque}
+A_{c}  =  \sqrt{2} (
+16\pi a_1 a_2 r -32 (a_1+a_2)r^2 +16 r^3).
+\end{equation}.
+In this last case we were able to generalize this expression for
+the case that the balls did not fit side by side along one or both
+axis. The general expression depends on two angles
+(see Supl. Material), defined by
+\begin{equation}\label{angulos2d}
+ \begin{aligned}
+\alpha & :=\pi/2 - \arccos(a_2/r) \\
+\beta & := \frac{x_j +y_j}{2} .\\
+  \end{aligned}
+\end{equation}
+
+Then the resulting expression ends up being:
+ 
+\begin{equation}\label{colgeneral}
+  \begin{split}
+  A_\text{col}  = 16\sqrt{2} \bigl( 2a_1a_2r(\alpha-\beta)
+ \\ + 2r^2 [a_1 (\cos \alpha-\cos\beta) -a_2 (\sin\alpha -\sin\beta)]
+ \\ + r^3(\sin^2 \alpha -\sin^2\beta) \bigr)
+  \end{split}
+\end{equation}
+ 
+
+We proceed in the same manner as last section, checking numerically which
+random configurations
+fall within a small tolerance from the collision condition, and
+plotting this as a fraction of the total volume.
+This result is shown in Fig.~\ref{AreaChoqueTeoyNum}. 
+\begin{figure}
+\centering
+\includegraphics[width=0.45\textwidth]{./figures/areaCol01.pdf}
+\caption{Numerical and theoretical area 
+for collision between the discs.  The theoretical formula 
+\eqref{AreaChoque} breaks down at
+$r > h_2/4$, but we have here used the general formula \eqref{app:colgeneral}
+that appears in the Appendix.}
+\label{AreaChoqueTeoyNum}.
+\end{figure}
+
+
+\subsubsection{Wall collisions}
+
+The expression for $n$-dimensions without side-to-side restrictions can
+be obtained in clossed form. Let us supose that the wall in question
+is the $k$ ``positive'' wall and we are interested on disc $X$ hitting
+it. Then the area is
+\begin{equation}
+A_{wall} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C} \delta(x_k-a_k)
+\end{equation}
+After a little algebra this gives:
+\begin{equation}
+  \begin{split}
+    A_{wall} = 2a_k\prod_{ \substack{ j=1\\ j\neq k}}^n (2a_j)^2
+    \\ - 2^{2n-2} \sum_{m=0}^{n-1} \Bigr[
+      (-1)^m \pi^{ (n-m)/2} \frac{r^{m+n}}{\Gamma((m+n)/2+1)}
+    \\  \times 
+  \sumprod{m} (\mathbf{a}; j\neq k) \Bigl]
+  \end{split}
+  \end{equation}
+
+In two dimensions this results in
+\begin{equation}\label{areax1p}
+ A_\mathrm{wall}  = 8 a_1 a_2 ^2-4  \pi a_2 r^2 +\frac{16}{3}r^3 .
+\end{equation}
+(an expression for the case where $r>h_j/4$ for some $j$ is in
+the Supp. Mat.).
+For three dimensios this gives:
+\begin{equation}
+  A_{WC}=32 a_1 a_2^2a_3^2 
+  -64/3 r^3  a_2 a_3 \pi 
+  +8(a_2+a_3)r^4
+  -128 r^5/15.
+\end{equation}
+
+Once again, a simple Monte Carlo procedure verifies this result,
+shown in Fig.~\ref{area1derecha}. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.45\textwidth]{./figures/areawall01.pdf}
+\caption{Numerical and theoretical calculation for the area
+for the impact of a particular disk with the right wall.
+The general formula in derivated in \ref{app:wall2d} has been used.}
+\label{area1derecha}.
+\end{figure}
+
+Taking into account the symmetry of the expression for either disc
+ bouncing on either of the vertical walls, the
+area for this event is  $4A_\text{wall}$. 
+Thus the area for any impact on any wall is
+\begin{align}\label{areawalls}
+ A_\text{walls} & = 32 a_1 a_2 (a_1+a_2)-16 \pi r^2 (a_1+a_2) +\frac{128}{3}r^3.
+\end{align}
+
+
+\section{Exact mean event times}
+
+In this section, we apply the results of the last section to give
+exact mean inter-hop times, as well as wall collision and disc collision times.
+
+
+\subsection{Mean hopping time}
+
+ 
+Inserting the results of the previous section 
+into the formula for the mean times for crossing
+surfaces of section \eqref{meanfreetime}, finally gives exact mean inter-event times.
+
+For vertical
+hops we have
+\begin{equation}\label{hoptau}
+ \mean{\tau_\text{hop}} = 	
+\frac{3 \pi}{4\sqrt{2}}
+\frac{2 a_1^{2} a_2^{2}  - 2 \pi a_1 a_2 r^{2} + \textstyle \frac{a_2+a_2}{3}  (2r)^{3}  -  r^4}
+{ a_2 \sqrt{2}  ( a_1 - r )^2}.
+\end{equation}
+Recall that here there is a factor $s = 2$.
+
+In the limit of small disc radius, the discs have almost no interactions, and the result depends only
+on the table height:
+\begin{equation}\label{hoptaulimit}
+ \mean{\tau_\text{hop}} \overset{r \to 0}{\sim}
+\frac{3 \pi}{8\sqrt{2}}h_2.
+\end{equation}
+
+Also of interest is the limit $r\sim h_1/4$, where vertical hopping becomes
+impossible.  The lower term goes to zero quadratically, while the available volume
+is still positive (except in the degenerate case $h_1=2h_2$). The exact expression
+is cumbersome, due to the fact that the general volume expression contains trigonometric functions
+ and is unintuitive (see Section~\ref{app:volume2d}),
+but the leading term in the numerator is  $h_1^2(h_2/2-h_1/4)^2$, and the denominator
+stays the same, so
+it goes to infinity
+like $1/x^2$. The figures \ref{meanhopp2d} and
+\ref{meanhopp3d} show the comparison between
+numeric and analytic results for the complete valid range. Notice the abrupt
+change in behavior as we approach $r_{vmax}$.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{./figures/verthop2d.pdf}
+  \caption{Mean hopping time as function of the radius, 2D case.}\label{meanhopp2d}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{./figures/verthop3d.pdf}
+  \caption{Mean hopping time as function of the radius, 3D case.}\label{meanhopp3d}
+\end{figure}
+
+
+\subsection{Mean disc collision time}
+
+For collisions between 2d discs, we have (for the case $r < h_1/4$),
+\begin{equation}\label{colltau}
+ \mean{\tau_\text{coll}} = 	
+\frac{3 \pi}{2\sqrt{2}}
+\frac {2 a_1^2 a_2^2  - 2 \pi a_1 a_2 r^{2} + \textstyle \frac{a_1+a_2}{3}  (2r)^{3}
+  -  r^4}
+{2\pi a_1 a_2 r -4(a_1+a_2)r^2+2r^3}.
+\end{equation}
+As expected, this tends to infinity in the limit of small radius, with asymptotics
+\begin{equation}\label{colltaulim0}
+\mean{\tau_\text{coll}} \overset{r \to 0}{\sim}
+\frac{3}{8\sqrt{2}}\frac{h_1h_2}{r}.
+\end{equation}
+
+For the case in which the discs narrowly fit inside the table we need to
+use the more cumbersome expression in \eqref{VolumenCasoFeo} and
+the corresponding area. The time between collisions should go to zero; 
+see figures~\ref{meancol2d}  and \ref{meancol3d}.
+In this case, the function is smooth for the whole
+range of valid values for $r$.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/collisions2d.pdf}
+  \caption{Mean disc collision time as function of the radius, 2D. }\label{meancol2d}
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/collisions3d.pdf}
+  \caption{Mean disc collision time as function of the radius, 3D.
+  Notice the difference of scale with the previous figure.}\label{meancol3d}
+\end{figure}
+
+
+\subsection{Mean wall collision time}
+
+Lastly, for a specific ball colliding with a specific vertical wall
+in 2 dimensions, we have
+\begin{equation}\label{impactwall}
+ \mean{\tau_\text{wall}} = 	
+\frac{3 \pi}{2\sqrt{2}}
+\frac { 2a_1^2 a_2^2  -  2\pi a_1 a_2 r^2 + \frac{a_1+a_2}{3}(2r)^3 - r^4}
+{a_1a_2^2-a_2 r^2\pi/2 + \frac{16}{3} r^3 },
+\end{equation}
+in the case that $r<h_2/4$. The limiting form for small $r$ depends
+only on the width of the table and is exactly
+$3\pi h_1/2$. In the numerics this appears as the intersection with the vertical
+axis.
+
+For the case that $r\approx h_2/4$ we would have two limiting forms,
+as there is a discontinuity in the available Volume, but it is exactly
+a factor of two. In the comparison with numerics, we can see
+this jump in the function, accompanied by a larger error in the
+calculations (since it is harder to find correct starting positions). 
+This is indicative of 
+the system breaking into smaller independent ergodic components.
+In the figures \ref{wall2d} and \ref{wall3d} we see a strange
+behaviour. The discontinuity is very obvious for the 2D case,
+but for the 3D case, the formula \emph{without correction}
+gives surprisingly well results for $r > h_2/4$. This has to
+do with the fact that even when both area and volume
+formulas are discontinous in its derivatives,the system is still
+one single ergodic component. It doesn't split into two until
+the balls cannot cross each other, and that happens when
+the radius is larger than the maximal fitting radius for
+the two other axis. 
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{./figures/wall2d.pdf}
+  \caption{The mean impact-on-walls time as function of the radius, 2D.
+    Notice the big discontinuity at $r=h_2/4$.}
+    \label{wall2d}.
+\end{figure}
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{./figures/wall3d.pdf}
+  \caption{The mean impact-on-walls time as function of the radius, 2D.
+    Even when we haven't checked the formula for
+    the discontinuity at $r=h_2/4$, the teoretical expressions fits
+    amazingly well.}
+    \label{wall3d}.
+\end{figure}
+
+
+%
+\section{Distributions}
+
+Since each type of event time that we study is a recurrence time to a
+certain surface in phase space, we expect to observe the standard
+exponential distribution for return times of hard chaotic systems
+\cite{Hirata1999}. It is known that deviations from the
+exponential depend on the particularities of the system at hand
+\cite{Altmann2005}.
+
+
+As an example, we explore
+the distribution of hopping times for different radii and find that the
+distribution depends both qualitatively and quantitatively on the
+radius, with the expected exponential decay being observed in the middle section
+of the distribution. 
+
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.45\textwidth]{figures/histogram_hopping_times.pdf}
+  \caption{Histogram of hopping times.}
+    \label{histogram_hopping}.
+\end{figure}
+
+
+\section{Conclusions}
+
+We have calculated exact analytic expressions for mean hopping and
+collision times in the paradigmatic model of two balls in a hard box,
+by treating them as return times to  appropriately-chosen surfaces of section, 
+and applying results from ergodic theory.
+
+The analytical results derived 
+confirm the limiting behavior obtained
+by Bowles \etal \cite{Bowles04} by a different method,
+and are in excellent agreement with Monte Carlo simulations.
+
+The results may be extended to different radii, considering two parameters,
+$r_1$ and $r_2$. That would give some bifurcations in cases, that could
+produce scenarios in which hopping is allways permited or that one of the
+discs cannot be larger (or cannot move anymore,
+blocking sections of the configurations space), but the other still has space to use.
+The integrals would be similars as those presented here, but the space avaible
+would change. 
+
+It would also be possible to extend the results to calculate exact mean collision
+and hopping times for systems containing more discs,
+but the analytical calculations become more challenging \cite{three_hard_discs_2004}.
+In the limit of a large number of hard spheres, Chernov \cite{Chernov97}
+was able to apply these methods to derive the exact limiting  free flight time for a gas of hard spheres. Limiting case tend to overlock the scenario bifurcations that
+can occur on specific instances. Hopping, in particular, would become very
+messy after the addition of a third disc. Discs can block each other for long periods,
+but not make a definitive block, and so on.
+
+Our work has presented here the simplest case for the problem at hand, but it still
+can give a cuantitative insight in the distribution of times and their
+general behaviour. As an example, this can be even applied for the design of a certain
+random switch, with a known distribution of times. A microscopic table with two
+fullerene balls may produce a similar dynamical system, and the change of positions
+or the hit against walls be measured and used to trigger certain switches. 
+Knowing the mean times and approximate distributions can be then used
+to obtain the desirable switching times of a random, deterministic machine.
+
+The known laws of behaviour of chaotic systems are powerfull universal insights
+into seemingly random motion. Nevertheless, each systems has its own
+particularietis which make it stand from the rest. The slight deviation from
+these universal laws are a fingerprint of the underlying systems. By
+accumulation of examples, we may gain insight into other problems that
+present allready seen behaviour. We hope that the distributions presented here
+help in that direction. 
+
+
+\onecolumngrid
+\appendix
+
+\section{General derivation for arbitrary dimensions}
+\label{app:area_volumeNd}
+
+We are interested in the avaible configuration space
+of two n-dimensional hard spheres inside a box of size $h_1,\ldots,h_n$. The
+spheres cannot intersect each other or the walls of the box. They are called
+X and Y, and they are
+centered around ($x_1,\ldots,x_n$) and ($y_1,\ldots,y_n$). Both have radius $r$.
+Since the spheres are inside the box,
+then $-a_n<x_n<a_n$ and $-a_n<y_n<a_n$ with $a_n = h_n/2 - r$, and
+because they do not intersect, $\sqrt{\sum_j {x_j - y_j}^2}>2r$ at all times.
+Without loss of generality we can consider the dimensions of the box to
+be ordered by size, i.e. $a_1 \leq a_2 \leq \ldots a_n$.
+
+\subsection{Volume in $n$ dimensions}\label{app:volumend}
+
+The volume is the volume of the rectangular box minus the
+volume of the excluded centers that correspond to intersecting spheres:
+\begin{equation}
+V = V_{box} - V_{exc}
+\end{equation}
+with
+\begin{equation}
+V_{box} =  \prod_{j=1}^n \int_{-a_j}^{a_j} dx_j \int_{-a_j}^{a_j}  dy_j = \prod_{j=1}^n (2 a_j)^2 
+\end{equation}
+and
+\begin{equation}
+V_{exc} =  \prod_{j=1}^n \int_{-a_j}^{a_j} dx_j \int_{-a_j}^{a_j}  dy_j  \indicator{Z^C}
+\end{equation}
+
+The interesting problem is the excluded Volume. 
+Since the indicator function depends only on the relative positions between the sphere,
+we change to the center of mass and relative coordinates given by
+\begin{align*}
+z_j & = x_j -y_j \\
+w_j & = \frac{x_j +y_j}{2} .\\
+  \end{align*}
+In terms of these coordinates the exluded volume is 
+\begin{align}
+V_{exc} & =  \prod_{j=1}^n \int_{-2a_j}^{2a_j} dz_j \int_{-a_j + \frac{|z_j|}{2}}^{a_j - \frac{|z_j|}{2}}  dw_j  \indicator{Z^C} \\
+& = \int_{-2a_1}^{2a_1} dz_1 (2a_1 -|z_1|) \int_{-2a_2}^{2a_2} dz_2 (2a_2 - |z_2|)  \ldots \int_{-2a_n}^{2a_n} dz_n (2a_n - |z_n|)  \mathbf{1}_{Z^C} 
+\end{align}
+ 
+
+To simplify the notation we define the following operators
+\begin{equation}
+\hat{O}_j  = \int_{-2 a_j}^{2 a_j} dz_j \left( 2a_j -|z_j| \right), 
+\end{equation}
+so that
+\begin{equation}
+V_{exc} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C}
+\end{equation}
+
+
+For each dimension $j$, there are two possible cases $a_j \geq r$ or $a_j < r$. In the first case, the two spheres fit completely along the $j$ dimension. In the second one, only one of the spheres fit along the $j$ dimension. Since we have $a_1 \leq a_2 \leq \ldots a_n$, we can assume $a_j<r$ for $j\leq k$ and $a_j>r$ for $j>k$.
+
+We also note that since $\vec{z} \in Z^C$ if $\sqrt{\sum_{j=0}^{n} z_j^2 }< 2r$ then 
+\begin{equation}
+\indicator{Z^C} = \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}},
+\end{equation}
+which allows us to write the excluded volume as
+\begin{align}
+V_{exc} & =  \left( \prod_{j=1}^k \hat{O}_j \right) \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} \left( \prod_{j=k+1}^n \hat{O}_j \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}}.
+\end{align}
+
+Since we have that $a_j>r$ for $j>k$, then the $\indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}}$ will be zero whenever $|z_j|>2 a_j$. This makes it possible to rewrite the terms above corresponding to $j>k$ as
+\begin{align}
+ \left( \prod_{j=k+1}^n \hat{O}_j \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}} & = \int_{-2 a_{k+1}}^{2 a_{k+1}} dz_{k+1} \left( 2a_{k+1} -|z_{k+1}| \right) \ldots \int_{-2 a_n}^{2 a_{n}} dz_{n} \left( 2a_{n} -|z_{n}| \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}} \\
+& = \int_{-\infty}^{\infty} dz_{k+1} \left( 2a_{k+1} -|z_{k+1}| \right) \ldots \int_{-\infty}^{\infty} dz_{n} \left( 2a_{n} -|z_{n}| \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}}.
+\end{align}
+
+Since the indicator function depends only on the magnitude of the $(z_{k+1} \ldots z_n )$ vector, we make the following transformation to $n-k$-dimensional spherical coordinates:
+\begin{equation}
+  \begin{split}
+    z_{k+1} & =\rho \cos \phi_1 \\
+    z_{k+2} & =\rho \sin \phi_1 \cos \phi_2 \\
+     z_{k+3} & =\rho \sin \phi_1 \sin \phi_2 \cos \phi_2 \\
+    \vdots & \\
+   z_{n-1} & =  \rho \sin \phi_1 \cdots \sin \phi_{n-k-2} \cos \phi_{n-k-1} \\
+    z_{n} & = \rho \sin \phi_1 \cdots \sin \phi_{n-k-1},
+  \end{split}
+\end{equation}
+where the volume element is given by
+\begin{equation}
+d z_{k+1} \ldots d z_n = \rho^{n-k-1} dr d \Omega = \rho^{n-k-1}  \sin^{n-k-2} \phi_1 \sin^{n-k-3} \phi_2 \ldots \sin \phi_{n-k-2} dr d\phi_1 \ldots d\phi_{n-k-1}.
+\end{equation}
+
+Noting that, 
+\begin{align}
+\prod_{j = k+1}^n ( 2 a_j -|z_j|) = &  \sum_{m=0}^{n-k} \quad \sum_{i_1< \ldots <i_m } \left( \prod_{l \in \lbrace i_1, \ldots i_m \rbrace} (-|z_l |) \right) 
+ \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} (2 a_l) \right) \\
+= &  \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m} \rho^ m \sum_{i_1< \ldots <i_m } \left( \prod_{l \in \lbrace i_1, \ldots i_m \rbrace} \frac{|z_l |}{\rho} \right) 
+ \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) \\ 
+=& \sum_{m=0}^{n-k} f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) \rho^m
+\end{align}
+we have
+\begin{align}
+ \left( \prod_{j=k+1}^n \hat{O}_j \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}}  = & \sum_{m=0}^{n-k} \left( 
+\int_{sphere} f_m \left( \phi_1, \ldots \phi_{n-k-1} \right) d \Omega 
+\right) \left(
+\int_0^\infty  \rho^{m+n-k-1} \indicator{\rho<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}} d\rho 
+\right) \\
+= & \sum_{m=0}^{n-k} \left( 
+\int_{sphere}   f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) d \Omega 
+\right)
+\left(
+\int_0^{\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}}  \rho^{m+n-k-1} d\rho 
+\right)  \\
+= & \sum_{m=0}^{n-k} \left( 
+\int_{sphere}   f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) d \Omega 
+\right) 
+\left(\frac{\left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2}}{m+n-k}
+\right) 
+\end{align}
+
+We proceed to solve the angular integrals
+\begin{equation}
+\int_{sphere}   f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) d \Omega  = 
+ (-1)^{m} 2^{n-k-m} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) \int_{sphere} \left( \prod_{l \in \lbrace i_1, \ldots i_m \rbrace} \frac{|z_l |}{\rho} \right) d \Omega .
+\end{equation}
+
+We note that for given the spherical symmetry of the problem, the integral of $ \prod_{l \in \lbrace i_1, \ldots i_m \rbrace} \frac{z_l}{\rho}$  over the solid angle does not depend on the particular combination of indices $i_1< \ldots <i_m $ chosen, but only on the fact that $m$ indices where chosen. So, we can write
+\begin{equation}
+\int_{sphere}   f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) d \Omega  = 
+c.
+\end{equation}
+
+Note that for $m<n-k$ we can write,
+\begin{align}
+d \Omega = &   \sin^{n-k-2} \phi_1 \sin^{n-k-3} \phi_2 \ldots \sin \phi_{n-k-2} d\phi_1 \ldots d\phi_{n-k-1}\\
+ = & \sin^{n-k-2} \phi_1 \sin^{n-k-3} \phi_2 \ldots \sin^{n-k-m-1} \phi_m \sin^{n-k-m-2} \phi_{m+1} \ldots \sin \phi_{n-k-2} d\phi_1 \ldots d \phi_m  d \phi_{m+1} \ldots d\phi_{n-k-1} \\
+ = &\left( \prod_{l = 1}^m \sin^{n-k-l-1} \phi_l  d \phi_l \right)d\Omega_{\left( \phi_{m+1}, \ldots , \phi_{n-k} \right)},
+\end{align}
+with $d\Omega_{\left( \phi_{m+1}, \ldots , \phi_{n-k} \right)}$ the solid angle on the $n-k-m$-dimensional space formed by the coordinates from $m+1$ to $n-k$. 
+
+We also can write 
+\begin{align}
+\prod_{l=1}^m \frac{|z_{k+l}|}{\rho} = & \left| \left( \cos \phi_1 \right) \left( \sin \phi_1 \cos \phi_2 \right)\left(\sin \phi_1 \sin \phi_2 \cos \phi_2 \right) \ldots \left(\sin \phi_1 \ldots \sin \phi_{m-1} \cos \phi_m\right) \right|
+ = \left| \prod_{l=1}^m \sin^{m-l} \phi_l \cos \phi_l \right|.
+\end{align}
+
+So 
+\begin{align}
+ \int_{sphere} \left( \prod_{l =1}^m \frac{|z_{k+l}|}{\rho} \right) d \Omega &  =  \left(
+ \prod_{l=1}^m \left( \int_{0}^{\pi} \left| \sin^{m-l} \phi_l \cos \phi_l \right| \sin^{n-k-l-1} \phi_l  d\phi_l \right) \right)  
+\int_{sphere_{n-k-m}} d\Omega_{\left( \phi_{m+1}, \ldots , \phi_{n-k} \right)} \\
+& =  \left( \prod_{l=1}^m \frac{2}{n-k+m-2l}\right) \frac{2 \pi^{\frac{n-k-m}{2}}}{\Gamma \left(\frac{n-k-m}{2} \right)} = \frac{ 2^{m} \left( n-k -m- 2 \right)!!}{\left( n-k +m-2\right)!!}  \frac{2 \pi^{\frac{n-k-m}{2}}}{\Gamma \left(\frac{n-k-m}{2} \right)} \\
+& = \frac{2\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)}
+\end{align}
+with $x!!$ the double factorial and $ \frac{2 \pi^{\frac{n-k-m}{2}}}{\Gamma \left(\frac{n-k-m}{2} \right)}$ the surface area of a $n-k-m$-dimensional sphere. 
+
+Hence the angular integrals give
+\begin{equation}
+\int_{sphere}   f_m \left( \phi_1, \ldots, \phi_{n-k-1} \right) d \Omega  = 
+ (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)}
+\end{equation}
+
+
+
+Substituting in previous equations we find
+ \begin{align}
+ \left( \prod_{j=k+1}^n \hat{O}_j \right) \indicator{ \sqrt{\sum_{j=k+1}^{n} z_j^2}<\sqrt{4r^2 - \sum_{j=0}^{k} z_j^2}}  
+= & \sum_{m=0}^{n-k}
+ \frac{ (-1)^{m} 2^{n-k-m+1} \pi^\frac{n-k-m}{2}\left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2}}{\Gamma \left( \frac{n-k+m}{2}\right) ( m+ n -k)}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) \\
+= & \sum_{m=0}^{n-k}
+ \frac{ (-1)^{m} 2^{n-k-m} \pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m + 1}{2}\right)} \left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right),
+\end{align}
+and then the excluded volume becomes,
+\begin{align}
+V_{exc}  & =  \left( \prod_{j=1}^k \hat{O}_j \right) \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}  \sum_{m=0}^{n-k}
+ \frac{ (-1)^{m} 2^{n-k-m} \pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m + 1}{2}\right)} \left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) \\
+& =  \sum_{m=0}^{n-k}
+ \frac{ (-1)^{m} 2^{n-k-m} \pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m + 1}{2}\right)}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) 
+\left( \prod_{j=1}^k \hat{O}_j \right) \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} 
+ \left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2} 
+\end{align}
+with
+\begin{align}
+\left( \prod_{j=1}^k \hat{O}_j \right) \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} 
+& \left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2} 
+=  \\
+& \int_{-2a_1}^{2a_1} dz_1 (2a_1 -|z_1|)   \ldots \int_{-2a_k}^{2a_k} dz_k (2a_k - |z_k|) 
+\indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} 
+ \left( 4r^2 - \sum_{j=0}^{k} z_j^2 \right)^{(m+n-k)/2} .
+\end{align}
+
+Solving the expression above for arbitrary $k$ is highly non-trivial as it involves an integration over the intersection of a $k$-dimensional sphere with radius $2r$ and a $k$-dimensional box. So we will limit ourselves to consider $k=0,1$.
+
+For $k=0$, we have
+\begin{align}
+V_{exc}  & =  \sum_{m=0}^{n}
+ \frac{ (-1)^{m} 2^{n-m} \pi^\frac{n-m}{2}}{\Gamma \left( \frac{n+m + 1}{2}\right)} \left(2r\right)^{m+n}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)
+\end{align}
+
+For $k=1$, we need to solve
+\begin{align}
+\int_{-2a_1}^{2a_1} dz_1 (2a_1 -|z_1|)  
+\indicator{|z_1|<2r}
+ \left( 4r^2 -  z_1^2 \right)^{(m+n-1)/2}, 
+\end{align}
+and since $a_1<r$ then,
+\begin{align}
+\int_{-2a_1}^{2a_1} dz_1 (2a_1 -|z_1|)  
+\indicator{|z_1|<2r}
+ \left( 4r^2 -  z_1^2 \right)^{(m+n-1)/2} & = 2 \int_{0}^{2a_1} dz_1 (2a_1 -z_1)  
+ \left( 4r^2 -  z_1^2 \right)^{(m+n-1)/2} \\
+& = 2^{m+n+2} a_1^2 r^{m+n-1} \int_{0}^{1} dz (1 -z)  \left(1 - \left(\frac{ a z}{r}\right)^2 \right)^{(m+n-1)/2}.
+\end{align}
+Using the change of variables $z_1 \rightarrow 2a_1 z$,
+\begin{align}
+ 2 \int_{0}^{2a_1} dz_1 (2a_1 -z_1)  
+ \left( 4r^2 -  z_1^2 \right)^{(m+n-1)/2} & = 2 \int_0^1 (2 a_1) dz (2 a_1 - 2a_1 z) \left( (2r)^2 - (2 a_1 z)^2\right)^{(m+n-1)/2}  \\
+& = 2 (2 a_1)^2 (2r)^{m+n-1} \int_0^1 dz (1-z) \left( 1 - \left(\frac{a_1 z}{r}\right)^2\right)^{(m+n-1)/2} \\
+& = 2 (2r)^{m+n+1} \left( \frac{a_1}{r}\right)^2 \int_0^1 dz (1-z) \left( 1 - \left(\frac{a_1 z}{r}\right)^2\right)^{(m+n-1)/2} \\
+& =  2 (2r)^{m+n+1} g_{m+n+1} \left(\frac{a_1}{r} \right),
+\end{align}
+where 
+\begin{align}
+g_{j} \left(x\right) &= x^2  \int_0^1 dz (1-z) \left( 1 - \left(xz\right)^2\right)^{j/2-1} \\
+& = x^{2} {{}_{2}F_{1}\left(\begin{matrix} \frac{1}{2},1 - \frac{j}{2} \\ \frac{3}{2} \end{matrix}\middle| {x^{2} } \right)}
++ \frac{\left( 1-x^2\right)^{j/2}-1}{j}.
+\end{align}
+Resulting in 
+\begin{align}
+V_{exc}  & =  \sum_{j=0}^{n-k}
+ \frac{ (-1)^{m} 2^{n-k-m} \pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m + 1}{2}\right)}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) 
+ 2 (2r)^{m+n+1} g_{m+n+1} \left(\frac{a_1}{r} \right)
+\end{align}
+This can be compared to the expression in 2
+dimensions in the section \ref{app:volume2d}.
+
+\subsection{Collision between spheres Area}
+
+
+We see the codimension 1 areas as a surface described by $f(\mathbf{x,y})=0$.
+Considering $f = \sqrt{\sum_j (x_j-y_j)^2} -2r$, 
+then 
+\begin{align}
+A_{col} =  \prod_{m=1}^n \int_{-a_j}^{a_j} dx_j \int_{-a_j}^{a_j}  dy_j \left| \nabla (f )\right| \delta(f), 
+\end{align}
+using that $\left| \nabla (f )\right| = \sqrt{2}$ and changing coordinates we get,
+\begin{align}
+A_{col} =\sqrt{2}  \prod_{j=1}^n \hat{O}_j \delta(f) = \sqrt{2}  \prod_{j=1}^k \hat{O}_j \prod_{j=k+1}^n \hat{O}_j \delta(f).
+\end{align}
+
+
+Once again, we first focus on the dimensions with $a_j>r$. Following the same steps as in the volume calculation we can see that
+\begin{align}
+\prod_{j=k+1}^n \hat{O}_j \delta(f) & =  \sum_{m=0}^{n-k} \left( 
+\int_{sphere} f_m \left( \phi_1, \ldots \phi_{n-k-1} \right) d \Omega 
+\right) \left(
+\int_0^\infty  \rho^{m+n-k-1} \delta(f) d\rho \right) \\
+& = \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} \left(
+\int_0^\infty  \rho^{m+n-k-1} \delta(f) d\rho \right)    \\
+&= \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} \left(
+\int_0^\infty  \rho^{m+n-k-1}\sum_{\rho_0} \frac{\delta(\rho - \rho_0)}{|f^\prime(\rho_0)|} d\rho \right) ,
+\end{align}
+where $\rho_0$ are the roots of $f(\rho)$. Since $f = \sqrt{\sum_j z_j^2} - 2r = \sqrt{\sum_{j=0}^k z_j^2 + \rho^2} - 2r$, then we have 
+\begin{equation}
+\rho_0 = \pm \sqrt{4r^2 - \sum_{j=0}^k z_j^2 }, 
+\end{equation}
+and
+\begin{equation}
+|g^\prime (\rho_0)| = \frac{\sqrt{4r^2 - \sum_{j=0}^k z_j^2}}{2r},
+\end{equation}
+when $\sum_{j=0}^k z_j^2 \leq 2r$.
+
+Only the positive root is in our integration domain so,
+\begin{align}
+\int_0^\infty  \rho^{m+n-k-1} \delta(f) d\rho &=\left( \sqrt{4r^2 - \sum_{j=0}^k z_j^2 } \right)^{m+n-k-1}  \frac{2r}{\sqrt{4r^2 - \sum_{j=0}^k z_j^2}} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r} \\
+&= 2r \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}.
+\end{align}
+Hence,
+\begin{align}
+\prod_{j=k+1}^n \hat{O}_j \delta(f) =  \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} 2r \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}, 
+\end{align}
+and
+\begin{align}
+A_{col} = \sqrt{2} \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} 2r \prod_{j=0}^k \hat{O}_j \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}
+\end{align}
+
+Again, we are unable to find a closed form expression for general $k$, so we limit ourselves to $k=0,1$.
+
+
+\section{Detailed calculations for two dimensions}
+\label{app:area_volume2d}
+
+In this section, we find expressions for areas and volumes in all 
+regimes.
+
+To not encumber  the formulas we use  $(a , b)  = a_1 , a_2 $
+and $w,h =: h_1, h_2 $.
+
+
+\subsection{Volume}\label{app:volume2d}
+
+
+If $w, h > 4r$, then the limits of integration
+are unaffected by the radius of the circles.
+In order to avoid the same positive term $16a^2b^2$, 
+in the formulas, we work here with
+the excluded volume $V_{exc}$, and ignore the  $V_{box}$ part.
+
+Remember that $(x_1, x_2)$ are the center coordinates of the
+ball called X, and $(y_1, y_2)$ of the ball called Y,
+and $(x,y)$  do no correspond to horizontal and vertical axis.
+In two dimensions we used slightly different coordinates:
+
+\begin{equation}\label{cambiocoor2d}
+  \begin{split}
+ x  \defeq \frac{x_1 - y_1}{\sqrt{2}};  &
+\quad X  \defeq \frac{x_1 + y_1}{\sqrt{2}};  \\
+ y  \defeq \frac{x_2 - y_2}{\sqrt{2}}; & 
+\quad Y  \defeq \frac{x_2 + y_2}{\sqrt{2}}.
+  \end{split}
+\end{equation}
+
+We begin the derivation after integrating out $X$ and $Y$:
+\begin{equation}\label{volgral2d}
+\frac{V_{exc}}{16}  =\iint \rd x \rd y \left[ 2ab-\sqrt{2}(ax+by)+x y \right]
+\indicator{x^2+y^2 < 2r^2 }.
+\end{equation}
+A diagram helps us visualize the limits of integration. The most general
+case is (without loss of generality) $h < w < 2h$; as the disc radius 
+%$r$ increases, we  pass through the following three regimes: from the regime where both vertical and horizontal
+%hopping occur, to one in which only vertical hopping
+%is possible, and then to  one in which no hopping is possible but movement
+%can still occur. The three regimes are characterized by the following inequalities:
+\begin{itemize}
+\item Horizontal and vertical hopping possible: $0 <r \leq h/4$;
+\item Only vertical hopping possible: $h/4 < r \leq w/4$;
+\item No hopping possible: $w/4 < r < (h+w - \sqrt{2hw}) / 2$.
+\end{itemize}
+The largest possible radius is illustrated in Fig.~\ref{radiomaximo}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.4\textwidth]{figures/DiagramaRadioMaximo.pdf}
+  \caption{The largest possible radius for $h<w<2h$. From the diagram
+    one can see that $t^2+v^2=(2r)^2$, $h=t+2r$ and $w=v+2r$, from which
+    one can deduce the value for $r$.}
+  \label{radiomaximo}
+\end{figure}
+
+We examine these regimes on the integration space.
+In Fig.~\ref{CasosIntegra} we present the three regimes as
+the shaded area where the indicator function is valued at $1$.
+
+\begin{figure*}[h]
+        \centering
+        \begin{subfigure}[b]{0.32\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{figures/DiagramaIntegraCaso1.pdf}
+          \caption{$r<b$}
+          \label{Caso1}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+        % (or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.32\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{figures/DiagramaIntegraCaso2.pdf}
+          \caption{$b<r<a$}
+          \label{Caso2}
+        \end{subfigure}%
+        ~ %add desired spacing between images, e. g. ~, \quad, \qquad etc.
+          %(or a blank line to force the subfigure onto a new line)
+        \begin{subfigure}[b]{0.32\textwidth}
+          \centering
+          \includegraphics[width=\textwidth]{figures/DiagramaIntegraCaso3.pdf}
+          \caption{$a,b<r$}
+          \label{Caso3}
+        \end{subfigure}%
+        \caption{Three hopping regimes. The integral must be evaluated over the shaded region.
+In the first case all hopping is possible; the middle case
+          allows only for vertical hopping; and the last case excludes hopping.}
+\label{CasosIntegra}
+\end{figure*}
+The shaded area in Fig.~\ref{CasosIntegra} represents the region in which the indicator function
+has value 1. 
+
+We evaluate the integral by carefully choosing the limits of integration. Note
+that the hatched area in the first three cases may be integrated in polar coordinates $(\rho, \theta)$.
+We call the indefinite integral $V_h(r,\alpha,\beta)$ (where $h$ stands for ``hatched'').
+As can be seen from figure \ref{CasosIntegra}, the all hopping possible regime
+corresponds to $\alpha = \pi/2, \beta=0$, the vertical hopping regime is where
+$\alpha < \pi/2, \beta=0$, and the no-hopping regime is where $0 < \beta< \alpha < \pi/2$.
+
+We rewrite the integral in terms of an angle $\theta$:
+
+\begin{equation}\label{app:volcyl}
+\begin{split}
+\frac{V_h(r,\alpha,\beta)}{16} &=
+\iint \rd x \rd y \left[ 2ab-\sqrt{2}(ay+bx)+x y \right]
+\indicator{x^2 + y^2 < 2r^2}\\
+&=
+\iint \rd \rho \rd \theta \rho 
+\left[ 2ab -\sqrt{2}(a\rho\sin\theta+b\rho\cos\theta) \right. \\
+& \qquad + \left. \rho^2 \cos\theta\sin\theta \right]
+\indicator{\rho^2<2r^2 }
+\end{split}
+\end{equation}
+The indicator function determines the limits for the $\rho$ integration variable.
+We set $\alpha, \beta$ as the other two limits and perform the
+integral over $\rho$,  which does not change in the three regimes.
+\begin{widetext}
+\begin{equation}
+  \begin{split}
+    \frac{V_h(r,\alpha,\beta)}{16} &=
+    \iint\limits_{\beta,0}^{\alpha,r\sqrt{2}} \rd \rho \rd \theta \rho
+    \left( 2ab -\sqrt{2}(a\rho\sin\theta+b\rho\cos\theta) 
+    +\rho^2 \cos\theta\sin\theta \right)\\
+ &=\int\limits_\beta^{\alpha}  \rd \theta  
+\left[ 2abr^2 - r^3 4/3 (a\sin\theta+b\cos\theta)+r^4 (\cos\theta\sin\theta) \right].\\
+\end{split}
+\end{equation}
+\end{widetext}
+Now we integrate over the $\theta$ variable:
+\begin{equation}\label{Volrtheta}
+  \frac{V_h(r,\alpha,\beta)}{16} = 2r^2ab\theta
+  +4/3r^3(a\cos\theta-b\sin\theta)
+  +\frac{r^4 \sin^2\theta}{2} \Bigg\vert_\beta^\alpha.
+\end{equation}
+For the case in which all hopping is posible, the expression in \eqref{Volrtheta}
+takes the values $\alpha=\pi/2, \beta=0$ and after multiplying by 16 both sides,
+we recover the Munakata and Hu formula. For the other two cases, we use that
+$\sin \alpha = b / r$ and $\cos \beta = a / r$.
+
+
+Now we treat the dotted areas in the figures \ref{Caso2} and \ref{Caso3}. Since they are triangular, they
+are more easily treated in Cartesian coordinates. We start with the upper
+triangular region
+and show the procedure, and then we cite the result for the
+other triangle.
+First, we realize that as we are inside the triangle, the characteristic function
+translates to a simple integration limit:
+
+\begin{widetext}
+\begin{equation}
+  \begin{split}
+    V_{u}(r) /16 &=\iint \rd y \rd x [2ab-\sqrt{2}(ay+bx)+xy] \indicator{(x)^2+(y)^2<2r^2 }\\
+    &=\int_0^{b\sqrt{2}}\rd y \int_{0}^{y\sqrt{r^2-b^2}/b} \rd x [2ab-\sqrt{2}(ay+bx)+xy] \\
+   &=\int_0^{b\sqrt{2}}\rd y \bigl[2abx-\sqrt{2}(ayx+bx^2/2)+x^2y/2\bigr]_{0}^{y\sqrt{r^2-b^2}/b} \\
+      &=\int_0^{b\sqrt{2}}\rd y
+        \bigr[
+          2aby\frac{\sqrt{r^2-b^2}}{b}
+          -\sqrt{2}
+          \bigr(
+          \frac{ay^2\sqrt{r^2-b^2}}{b}
+            +\frac{y^2(r^2-b^2)}{2b}
+            \bigl)
+           +\frac{y^3(r^2-b^2)}{2b^2}
+           \bigl]\\
+        &= \Bigr[ay^2\sqrt{r^2-b^2}-
+          \frac{\sqrt{2}y^3}{3}
+          \bigr(
+          \frac{r^2-b^2+2a\sqrt{r^2-b^2}}{2b}
+            \bigl)
+            +\frac{y^4(r^2-b^2)}{8b^2}
+            \Bigl]_0^{b\sqrt{2}}\\
+          &=2ab^2\sqrt{r^2-b^2}
+          -\frac{2b^2(r^2-b^2+2a\sqrt{r^2-b^2}}{3}+\frac{b^2(r^2-b^2)}{2}\\
+          V_{u}(r)&=32ab^2\sqrt{r^2-b^2} -\frac{32
+            b^2}{3}(r^2-b^2+2a\sqrt{r^2-b^2}) +8b^2(r^2-b^2).
+  \end{split}
+  \end{equation}
+The procedure is similar for the lower dotted  region in Fig.~\ref{Caso3},
+and gives a symmetric expression:
+\begin{equation}
+          V_{l}(r)=32a^2b\sqrt{r^2-a^2} -\frac{32
+            a^2}{3}(r^2-a^2+2b\sqrt{r^2-a^2}) +8a^2(r^2-a^2).
+\end{equation}
+\end{widetext}
+
+These expressions would account for all volume available in the configuration space, but
+cannot be used for calculation of all event times that interest us. We need also
+expressions that take into account that this space is divided into disjoint components,
+as some events become impossible in each of these subsystems. For example,
+(see the next section), disc 1 cannot hit the left wall if
+it started on the right and horizontal hopping is excluded. So we have to
+take into account that only half of the positions are available (due to symmetry)
+ in \eqref{meanfreetime}.
+
+Due to the symmetry of the problem, the available volume
+for each disjoint component of the dynamical system is equal; for example, if horizontal hopping is no longer possible
+($w/4<r<h/4$), then there are two symmetric disjoint components: the system
+starting with disc 1 on the left and the one starting with disc 1 on
+the right. Both occupy the same phase space volume, as they are
+symmetric under interchange of labels. If $h<4\leq r$ then the system gets further
+divided into four disjoint components. 
+
+
+
+\subsection{Areas in 2 dimensions}
+
+The above procedure must be repeated for the different
+area calculations. We use a suitable Dirac delta to represent each codimension-1 collision
+event (touching of a disc with a wall or another disc). We multiply the characteristic function of the available space by the Dirac delta, and
+then again divide it into the three cases, namely, all hopping, only vertical hopping
+and no hopping possible, again referring to Fig.~\ref{CasosIntegra}.
+Sometimes it turns out to be easier to obtain 
+the integral  over all configuration space and then exclude the part that
+corresponds to the overlapping condition. Again, the hatched area of the exclusion
+condition has a simpler representation in polar coordinates, and the triangular
+(dotted) regions can be treated in rectangular coordinates.
+
+
+\subsubsection{Hopping cross section}
+
+See Fig.~\ref{DiagramaDelta01}. 
+The Cross section area is given by
+$g_\text{hop}(\mathbf{x}) = x_2 - y_2 = 0$:
+
+\begin{widetext}\label{ahopcart}
+\begin{equation}
+  A_\text{hop} =
+\iiiint
+\limits_{\substack{x_1, y_1 = -a \\ x_2, y_2 = -b}}^{\substack{x_1, y_1 = a \\ x_2, y_2 = b}}
+\rd x_1 \rd x_2 \rd y_1 \rd y_2 
+ \, \indicator{ (x_1-y_1)^2 + (x_2-y_2)^2 \ge (2r)^2 } \, \delta \big(\frac{x_2-y_2}{\sqrt{2}}\big).
+\end{equation}
+\end{widetext}
+
+
+
+\begin{figure}
+\includegraphics[width=0.4\textwidth]{figures/diagramdelta01.pdf}
+\caption{The surface $x_2=y_2$ and the approximation to its measure by
+  $\epsilon$-width characteristic functions. Using the original coordinates
+  we perform an error of $\sqrt{2}$, but using the $y,Y$ coordinates
+  we arrive to the correct expresion. Using the MonteCarlo Numerics, this
+  error is dificult to detect, because both the numeric and the wrongly solved
+  analityc formula have the same multiplicative mistake. Is only when we plug this into
+Machta Zwanzig Formula that the error becomes evident. }\label{DiagramaDelta01}
+\end{figure}
+
+The simplest approach to this integral is using directly the expression in the $y$ and $Y$
+coordinates, since the surface is orthogonal to the $Y$ axis:
+  \begin{align} 
+    \frac{A_\text{hopp}}{8} & = \iiiint \limits_
+      {\substack{x, X, Y=0 \\ y=b\sqrt{2}}}^
+               {\substack{x=a\sqrt{2}, y=b\sqrt{2} \\
+                   X=a\sqrt{2}-x, Y =b \sqrt{2}-y }}
+                \mkern-36mu
+     \rd x   \rd y  \rd X   \rd Y
+     \indicator{x^2+y^2 \geq 2 r^2} \delta (y)
+     \label{pasoraro}
+     \\   
+     &=  \iint \limits_{x=0, y=-b\sqrt{2}}^{x=a\sqrt{2}, y=\sqrt{2}}
+    \mkern-18mu  \rd x \rd y 
+    (a\sqrt{2}-x)(b\sqrt{2}-y)
+    \indicator{x^2+y^2 \geq 2 r^2} \delta (y)
+    \\
+    &= \int \limits _0^{a\sqrt{2}} \rd x
+    b\sqrt{2} (a\sqrt{2}-x)
+    \indicator{x^2\geq 2 r^2}
+    \\
+    &= \int\limits_{r\sqrt{2}}^{a\sqrt{2}} \rd x
+    (2ab-xb\sqrt{2})
+    \\
+    &=\biggl[2abx-\frac{x^2b}{\sqrt{2}} \biggr]_{r\sqrt{2}}^{a\sqrt{2}}\\
+      A_\text{hopp}&=8\sqrt{2}b(a-r)^2
+  \end{align}
+  Note that in \eqref{pasoraro} we do not use symmetry in
+  $y$, due to the Dirac delta.
+  Here we have to apply the reasoning that was outlined in section \ref{knownfacts}.
+  Given that this event can be realized in two ways which are
+  distinguishable by their direction, it is as if the surface has two sides.
+  Thus, we can incorporate a multiplicative factor of $s=2$ into this expression, or include it in the denominator of 
+  the expression for the mean time.
+
+  \subsubsection{Disc collisions in 2D}
+  For other cross-section areas we proceed in a similar manner. 
+  Disc collisions occur when $\sqrt{x^2 + y^2} = r \, \sqrt{2}$, giving
+  \begin{equation}
+    \frac{A_\text{col}}{16}  = \iiiint\limits_
+         {x,X,y,Y=0}^
+         {\substack{x=a\sqrt{2},\, X=a\sqrt{2}-x
+             \\ y =  b\sqrt{2},\,  Y=b\sqrt{2}-y}}
+         \mkern-18mu
+    \rd x \rd X \rd y \rd Y
+    \delta (\sqrt{x^2+y^2}-\sqrt{2}r)
+  \end{equation}
+  \begin{multline}
+    \frac{A_\text{col}}{16}  = \iint \limits_{x,y=0}^
+      {x=a\sqrt{2},\, y=b\sqrt{2}}
+    \mkern-18mu \rd x \rd y 
+    \bigl[ 2ab-\sqrt{2}(ay+bx)+xy \bigr] \\
+    \times
+    \delta (\sqrt{x^2+y^2}-\sqrt{2}r)\\
+    \end{multline}
+  We change to polar coordinates as we did in \ref{app:volcyl}:
+  \begin{align}
+    x^2+y^2 =: \rho^2 \\   \Rightarrow   \delta(\sqrt{x^2+y^2}-\sqrt{2}r) \rightarrow
+    \delta(\rho-\sqrt{2}r)   
+    \end{align}
+  Then we continue straightforwardly:
+  \begin{widetext}
+    \begin{align}\label{app:colgeneral}
+      A_\text{col}/16 & =\iint\limits_{\rho=0, \theta=\beta}^{\rho=r, \theta=\alpha}
+      \mkern-18mu
+    \rd \theta \rd \rho \rho
+    \bigl[2ab-\sqrt{2}\rho(a\sin\theta+b\cos\theta)+\rho^2\cos\theta\sin\theta
+      \bigr]
+    \delta(\rho-\sqrt{2}r) \\
+    &=\int_\beta^\alpha \rd \theta \sqrt{2}r
+    \bigl[
+      2ab-2r(a\sin\theta+b\cos\theta)+2r^2\cos\theta\sin\theta)
+      \bigr] \\
+    A_\text{col} & = 16\sqrt{2} \bigl( 2abr(\alpha-\beta)
+    + 2r^2 [a (\cos \alpha-\cos\beta) -b (\sin\alpha -\sin\beta)]
+     + r^3(\sin^2 \alpha -\sin^2\beta) \bigr)
+    \end{align}
+    \end{widetext}
+    We have used the same trick as in previous subsection to obtain a general expression
+    that works even when hopping is not possible.
+    In the case of $r<w/4$ (all hopping possible)
+    we have the substitution $\alpha=\pi/2$ and $b=0$,
+    obtaining the result stated previously
+    in eq. \ref{AreaChoque}. It is practical to leave here the expression for 1/4 of the
+    total area. The symmetry of the cases makes it so that when the phase space splits
+    into disjoint components, the volume accessible and the area accessible scale in
+    the same manner.
+    
+    \subsubsection{Wall collisions}\label{app:wall2d}
+
+    For a collision with the wall, the $x_j, y_j$ are suitable coordinates.
+    Once again, we
+    have to be careful with the multiplicative factors that appear due to change
+    of variables. Let us suppose that we want the area that represents hits of
+    the disc Y against the right wall. That means that $y_1-a=0$. 
+    \begin{multline}
+      A_{x_1=a}  =\iiiint \limits_{-a,-a,-b,-b}^{a,a,b,b}
+       \mkern-9mu \rd x_1 \rd x_2 \rd y_1 \rd y_2 
+       \indicator{(x_1-y_1)^2+(x_2-y_2)^2 \geq (2 r)^2}
+       \\ \times \delta (y_1-a)\\
+      =\iiint\limits _{-a,-b,-b}^{a,b,b} \rd x_1  \rd y_1 \rd y_2 
+      \indicator{(x_1-a)^2+(x_2-y_2)^2 \geq (2 r)^2} 
+    \end{multline}
+    Changing variables;
+    \begin{equation}
+      \frac{x_2-y_2}{\sqrt{2}} =  y
+      \qquad \frac{x_2+y_2}{\sqrt{2}}=Y \qquad \frac{x_1-a}{\sqrt{2}}=x
+    \end{equation}
+    Integrating over $x$,
+    \begin{align}\label{areachoquexy}
+      A_{x_2=a} & =\sqrt{2} \mkern-18mu
+      \iiint \limits
+      _{-\sqrt{2}a,-\sqrt{2}b,-\sqrt{2}b+|y]}^{0,\sqrt{2}b,\sqrt{2}b-|y|}
+        \mkern-18mu \rd x \rd y \rd Y 
+        \indicator{(x^2+y^2 \geq 2 r^2}
+        \\
+        &=2\sqrt{2}\mkern-9mu
+        \iint \limits_{-\sqrt{2}a,-\sqrt{2}b}^{0,\sqrt{2}b}
+        \mkern-9mu
+        \rd x \rd y (\sqrt{2} b - |y|)
+      \indicator{(x^2+y^2 \geq 2 r^2}
+    \end{align}
+    
+    
+    In the case that all hopping is possible there are no problems with the above derivations,
+    but if vertical hopping is excluded then there are differences.
+ If $r>h/4$, and disc Y starts
+    on the left, it will never be able to hit the right wall. So, actually, this
+    is a subsystem of the whole  system in which our general formula needs
+    to be adjusted. 
+
+    When $h/4<r<w/4$, a disk cannot interchange left--right positions,
+    but can still move across all vertical available space.  After $r\geq w/4$,
+    the system gets split again into two more disjoint components.
+    So, when we calculate the available volume, we use only the
+    part of the volume corresponding to the set where the event can occur
+    Again, it is simpler to evaluate the last expression in eq. \ref{areachoquexy}
+    in the excluded space and then to subtract that from the whole configuration
+    space evaluation:
+
+    \begin{widetext}
+    \begin{align}
+      A_{y_1=a} & =4\sqrt{2}\iint \limits_{0,0}^{\sqrt{2}a,\sqrt{2}b}
+        \rd x \rd y (\sqrt{2} b - y)
+        \indicator{(x^2+y^2) \geq 2 r^2}\\
+     &=\underbrace{4\sqrt{2}\iint \limits _{0,0}^{\sqrt{2}a,\sqrt{2}b}
+        \rd x \rd y (\sqrt{2} b - y)}_{\text{whole space}}
+        -\underbrace{
+          4\sqrt{2}\iint \limits_{0,0}^{\sqrt{2}a,\sqrt{2}b}
+        \rd x \rd y \rd Y 
+        \indicator{(x^2+y^2) < 2 r^2}(\sqrt{2} b - y)}_{\text{excluded space}}
+    \end{align}
+    \end{widetext}
+    The integrals are again routine to evaluate: the whole space part
+    gives
+    \begin{equation}
+      \frac{1}{4}A_{\text{whole}}=8ab^2.
+    \end{equation}
+    For the excluded part, we perform the same routine of evaluating the circular region
+    in polar coordinates and the triangular regions, if they exist, in Cartesian coordinates.
+    From the circular sector we get (see Fig.~\ref{CasosIntegra} and the following explanation
+    for $\alpha, \beta$ variables):
+    \begin{equation}
+      A_{sector}=8 b r^2(\alpha-\beta)+16r^3/3(\cos\alpha - \cos\beta)
+    \end{equation}
+    The upper triangle where to give, for $\alpha < \pi/2$,
+    \begin{equation}
+    A_{ut}=\frac{8}{3}b^2\sqrt{r^2-b^2}
+    \end{equation}
+    And the lower triangle a similar expression with $a$ instead of $b$.
+
+
+\section{Numerical method for calculating surface area}
+    
+All code used for the simulations is available, in keeping with the philosophy of open science.
+
+For simplicity, we used traditional rejection sampling to calculate the free volume and cross-sectional areas.
+
+The cross-sectional areas are calculated by fattening the surface $g(\mathbf{x}) = 0$ to $S_\epsilon := \{ \mathbf{x} : 0 \le g(\mathbf{x}) \le \epsilon \}$, or in the
+case of the hopping cross-section $S_{2 \epsilon} := \{ \mathbf{x}: \|g(\mathbf{x}) \| \le \epsilon \}$.
+
+Thus 
+$$A = \lim_{\epsilon \to 0} \frac{ \int \mathbf{1}_{S_\epsilon}}{\epsilon}$$ 
+is calculated by sampling points from the whole volume and rejecting those lying outside $S_\epsilon$.
+ 
+As in the analytical calculation, the width of this strip must be calculated correctly by dividing by $\| \nabla g(x) \|$.
+
+    
+\section*{Acknowledgements}
+
+
+DPS thanks Sidney Redner for posing the question that led to this work, and the Marcos Moshinsky Foundation for financial support via a fellowship.
+Support is also acknowledged from grants CONACYT-Mexico CB-101246 and CB-101997, and DGAPA-UNAM PAPIIT IN117117.
+
+
+\bibliography{TwoDiskBiblio}
+
+
+
+\end{document}
