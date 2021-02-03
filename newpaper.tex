@@ -1161,7 +1161,20 @@ and
 A_{col} = \sqrt{2} \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} 2r \prod_{j=0}^k \hat{O}_j \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}
 \end{align}
 
-Again, we are unable to find a closed form expression for general $k$, so we limit ourselves to $k=0,1$.
+Again, we are unable to find a closed form expression for general $k$, so we limit ourselves to $k=0,1$. For $k=0$ we regain the expression of the main text, while if
+$k=1$ we have to deal with the last part, where the integral operator is
+still hanging.
+
+\begin{equation}
+  \hat{O}_1 \left( 4r^2 -  z_1^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{ z_1^2}<2r}
+  = \int_{-2a_1}^{2a_1} \rd z_1 (4r^2-z_1^2)^{\frac{m+n-3}{2}}\indicator{\sqrt{ z_j^2}<2r}
+\end{equation}
+
+The limits are reduced to $ (-r\sqrt{2}, +r\sqrt{2} )$ because $4r>h_1$. Then, again,
+this expression cannot be put in closed form in general. If $n=3$, then we have
+the terms for $m \in [0, 1, 2] $. It is more or less feasible.
+
+We would put the other derivations here, but we ran out of \LaTeX.
 
 
 \section{Detailed calculations for two dimensions}
