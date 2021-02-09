@@ -12,15 +12,8 @@
 \usepackage{hyperref}
 
 
-%\bibliographystyle{alpha}
-
-%opening
-
-%\author{Rosa Rodríguez \& David P.~Sanders \& W. P. K. Zapfe}
-%\affil{Departamento de Física, Facultad de Ciencias, Universidad Nacional Autónoma de México, Ciudad Universitaria, Del.~Coyoacán, México D.F. 04510, Mexico}
-
 \usepackage{mathptmx}
-% I dont know if that package is compatible with revtex.
+
 
 \newcommand{\defeq}{:=}
 \newcommand{\mean}[1]{\left \langle #1 \right \rangle}
@@ -59,14 +52,15 @@
 \begin{abstract}
 We study the molecular dynamics of two balls undergoing hard collisions in a rectangular box.
 Using a mapping to a billiard model and a key result from ergodic theory, we obtain exact expressions for mean times between different classes of events:
-hops, i.e. horizontal or vertical interchanges of the particles; wall collisions; and disc collisions.
+hops, i.e. interchanges of the balls position in parallel to one side of the box;
+wall collisions; and collision between balls.
 To do so, we calculate
 volumes and cross-sectional areas in the 2n-dimensional configuration space.
-We compare exact analytical results against Monte Carlo simulations, with excellent agreement.
+We compare exact analytical results against Monte Carlo simulations in 2D and 3D,
+with excellent agreement.
 \end{abstract}
 
 \maketitle
-
 
 
 \section{Introduction}
@@ -110,40 +104,30 @@ inertial (Newtonian) motion, as a function of the geometrical parameters of the 
  since the dynamics of $N$ hard discs in $d$ spatial dimensions
  is equivalent to a \emph{billiard model} in the $Nd$-dimensional configuration space, i.e. a \emph{single} point particle colliding elastically 
 with suitable objects (``scatterers'') \cite{SzaszBook00}. 
-In particular, the system of two discs in a box is hyperbolic (chaotic) and ergodic when the discs are able to pass each other \cite{Sim99}. Otherwise, the system decomposes itself into
-a finite number of disjoint ergodic components (two or four), which are each still hyperbolic.
+The system of two balls in a box is hyperbolic (chaotic) and ergodic when the balls are able to pass each other side by side \cite{Sim99}.
+Otherwise, the system decomposes itself into
+a finite number of disjoint ergodic components (two, four, etc),
+each one being chaotic in itself.
 
-We can thus apply a key result from ergodic theory on mean collision times \cite{Chernov97} to obtain analytical expressions 
-for times between hops, between wall collisions, and between disc collisions; these are verified numerically. 
+We thus apply a key result from ergodic theory on mean collision times \cite{Chernov97} to obtain analytical expressions 
+for times between hops, between wall collisions, and between ball collisions; these are verified numerically. 
 In certain asymptotic regimes, we recover previously obtained power-law exponents \cite{Bowles04}.
 
 The main difficulty in the analysis is correctly accounting for several geometric factors with different origins in both the
 analytical and numerical calculations. The most complicated step occurs when the configuration space
 suffers a first derivative discontinuity in its formula. We where able to generalize somewhat
 the cross section formulas, but a analytical closed expression that covers all cases seems
-dificult to obtain for an arbitrary number of dimensions. 
+impossible to obtain for an arbitrary number of dimensions. 
 
 
-%The previous  results on
-%inertial dynamics can be extended  by particularizing 
-%exact expressions for the mean return times (MRT). 
-%We shall  obtain them through application of 
-%Machta and Zwanzig formula for residence times \cite{MachtaZwan} ??
-%We shall also  compare \emph{mean event times} with 
-%\emph{mean first event times} (MFET),
-%and give some arguments to explain the agreement between the two. 
-%Brownian dynamics shall be discussed elsewhere \cite{WorkInProgress}.
-%We shall also provide this paper with supplementary material 
-%detailing the calculations. 
 
-
-\section{Model: Two hard discs in a rectangular box}
+\section{Model: Two hard balls in a rectangular box}
 
 We consider two hard n-dimensional balls  with equal radius $r$,
 moving inside a box of sizes $h=(h_1, \ldots , h_n )$; see Fig.~\ref{billar01}. 
 The balls move inertially in the absence of forces, 
 following straight line trajectories,
-and undergo elastic collisions with one 
+and undergo elastic collisions with each 
 other and with the walls of the box.
 
 \begin{figure}[h]
@@ -329,7 +313,7 @@ so that
 V_{exc} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C}
 \end{equation}
 
-Recall that the dimensions $a_j$ of the available configuration space are functions of the disc radius $r$, 
+Recall that the dimensions $a_j$ of the available configuration space are functions of the ball radius $r$, 
 but we suppress this explicit dependence for simplicity.
 
 For each dimension $j$, there are two possible cases $a_j \geq r$ or $a_j < r$. In the first case, the two spheres fit completely along the $j$ dimension. In the second one, only one of the spheres fit along the $j$ dimension. We where able to arrive at
@@ -339,8 +323,8 @@ show the general derivation, but here we show the key results.
 We shall encounter many times the sum of products of subsets of a certain size,
 so it is convenient to designate them by a specific symbol.
 Let us consider a subset of size $m$ of the indices $\{1,\ldots, n\}$
- that label the dimensions. We call the sets of all subsets of indices of
- cardinality $m$ $C_m$. Then we shall introduce the following variations
+that label the dimensions. We call the sets of all subsets of indices
+of the choosen cardinality $C_m$. Then we shall introduce the following variations
  of the sum of products symbol:
 
  \begin{equation}
@@ -399,7 +383,7 @@ V_{h_1/4<r<h_2/4} = 32abr^2 \left[ \arccos(b/2r)-\arccos(a/2r) \right]\\
 \end{multline}
 
 In the general n-dimensional case we have an expresion for when the balls
-do not fit side by side just in one direction (see Sup. Mat.).
+do not fit side by side just in one direction (see \ref{app:area_volumeNd}).
 
 For our numerical simulations, we take $h_1=1.5$, $h_2=1$ and for 3d, $h_3=1.75$,
 which avoids degenerate cases. 
@@ -452,8 +436,8 @@ The appearance of the normalization factor $\| \mathbf{\nabla}g(\mathbf{x}) \|$ 
 %$| \mathbf{\nabla}g(\mathbf{x}) \| )\sqrt{2}$ constant for all points. 
 The main difficulty in these calculations is correctly accounting for the factors arising in this way.
 
-The procedure was to start from expression \eqref{voloper} and put a Dirac Delta
-in the integrand, so that we started allways ffrom expressions of the following
+We start from expression \eqref{voloper} and put a Dirac Delta
+in the integrand, so that we started always from expressions of the following
 form:
 \begin{equation}\label{areagral}
 A_{g} = \prod_{j=1}^n \hat{O}_j \mathbf{1}_{Z^C} \delta(g(\mathbf{x, y}))
@@ -512,7 +496,7 @@ remain at zero.}
 \end{figure}
 
 
-\subsubsection{Disc collisions}
+\subsubsection{Ball collisions}
 
 
 The area which represents collisions between the two discs is the surface area of the cylinder
@@ -524,7 +508,7 @@ of such set. We do not deal whith an Excluded and Free expresion pair.
  We found integral expressions for
 arbitrary number of dimensions, even if the balls do not fit
 together in one axis.
-For $r<h_j \forall j$, the integral expression is:
+For $r<h_j/4 \: \forall j$, the integral expression is:
 \begin{equation}
   \begin{split}
   A_{c} & =  \prod_{j=1}^n\int_{-\sqrt{2}a_j}^{\sqrt{2}a_j} \rd{z_j}
@@ -544,27 +528,27 @@ the integral:
 \end{equation}
 In three dimensions
 this resolves into
-\begin{equation}
+\begin{equation}\label{col3dnormal}
    \begin{split}
-     A_{c}=64 \sqrt{2} \big( 2 \pi r^2 a_1a_2a_3 
-      -\pi r^3 (a_1a_2 +a_2a_3 + a_3 a_1) \\
+     A_{c}=64 \sqrt{2} \big(2 \pi r^2 a_1a_2a_3 
+      - r^3 (a_1a_2 +a_2a_3 + a_3 a_1) \\
   +4r^4/3 (a_1+a_2+a_3)
   -r^5/2 \big).
   \end{split}
 \end{equation}
-In two dimensions is:
+And for two dimensions this is:
 \begin{equation}\label{AreaChoque}
 A_{c}  =  \sqrt{2} (
 16\pi a_1 a_2 r -32 (a_1+a_2)r^2 +16 r^3).
 \end{equation}.
 In this last case we were able to generalize this expression for
 the case that the balls did not fit side by side along one or both
-axis. The general expression depends on two angles
-(see Supl. Material), defined by
+axis. The  expression depends on two angles
+(see \ref{app:area_volume2d}), defined by
 \begin{equation}\label{angulos2d}
  \begin{aligned}
-\alpha & :=\pi/2 - \arccos(a_2/r) \\
-\beta & := \frac{x_j +y_j}{2} .\\
+\alpha & :=\arcsin(a_2/r) \\
+\beta & := \arcos(a_1/r) .\\
   \end{aligned}
 \end{equation}
 
@@ -620,8 +604,7 @@ In two dimensions this results in
 \begin{equation}\label{areax1p}
  A_\mathrm{wall}  = 8 a_1 a_2 ^2-4  \pi a_2 r^2 +\frac{16}{3}r^3 .
 \end{equation}
-(an expression for the case where $r>h_j/4$ for some $j$ is in
-the Supp. Mat.).
+
 For three dimensios this gives:
 \begin{equation}
   A_{WC}=32 a_1 a_2^2a_3^2 
@@ -645,7 +628,7 @@ The general formula in derivated in \ref{app:wall2d} has been used.}
 Taking into account the symmetry of the expression for either disc
  bouncing on either of the vertical walls, the
 area for this event is  $4A_\text{wall}$. 
-Thus the area for any impact on any wall is
+For example, the area for any impact on any wall in 2D is
 \begin{align}\label{areawalls}
  A_\text{walls} & = 32 a_1 a_2 (a_1+a_2)-16 \pi r^2 (a_1+a_2) +\frac{128}{3}r^3.
 \end{align}
@@ -703,11 +686,13 @@ change in behavior as we approach $r_{vmax}$.
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.45\textwidth]{./figures/verthop3d.pdf}
-  \caption{Mean hopping time as function of the radius, 3D case.}\label{meanhopp3d}
+  \caption{Mean hopping time as function of the radius, 3D case.
+    We do not have a clossed expression for $r>rhmax$, as can be appreciated.}
+  \label{meanhopp3d}
 \end{figure}
 
 
-\subsection{Mean disc collision time}
+\subsection{Mean balls collision time}
 
 For collisions between 2d discs, we have (for the case $r < h_1/4$),
 \begin{equation}\label{colltau}
@@ -741,7 +726,8 @@ range of valid values for $r$.
   \centering
   \includegraphics[width=0.45\textwidth]{figures/collisions3d.pdf}
   \caption{Mean disc collision time as function of the radius, 3D.
-  Notice the difference of scale with the previous figure.}\label{meancol3d}
+    Notice the difference of scale with the previous figure.
+  Again, we did not correct the formula for $r>rhmax$.}\label{meancol3d}
 \end{figure}
 
 
@@ -770,19 +756,22 @@ the system breaking into smaller independent ergodic components.
 In the figures \ref{wall2d} and \ref{wall3d} we see a strange
 behaviour. The discontinuity is very obvious for the 2D case,
 but for the 3D case, the formula \emph{without correction}
-gives surprisingly well results for $r > h_2/4$. This has to
+gives surprisingly good results for $r > h_2/4$. This has to
 do with the fact that even when both area and volume
 formulas are discontinous in its derivatives,the system is still
-one single ergodic component. It doesn't split into two until
+one single ergodic component in the 3D case, but not in the
+2D case, where the impossibility of hopping divides the phase space
+in disjoint components. In 3D doesn't split into two until
 the balls cannot cross each other, and that happens when
 the radius is larger than the maximal fitting radius for
-the two other axis. 
+the two other axis.  
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=0.45\textwidth]{./figures/wall2d.pdf}
   \caption{The mean impact-on-walls time as function of the radius, 2D.
-    Notice the big discontinuity at $r=h_2/4$.}
+    Notice the big discontinuity at $r=h_2/4$. The phase space is
+  allready split into disjoint components.}
     \label{wall2d}.
 \end{figure}
 
@@ -793,7 +782,7 @@ the two other axis.
   \caption{The mean impact-on-walls time as function of the radius, 2D.
     Even when we haven't checked the formula for
     the discontinuity at $r=h_2/4$, the teoretical expressions fits
-    amazingly well.}
+    amazingly well. The phase space is not split into disjoint components.}
     \label{wall3d}.
 \end{figure}
 
@@ -1099,8 +1088,9 @@ where
 \begin{align}
 g_{j} \left(x\right) &= x^2  \int_0^1 dz (1-z) \left( 1 - \left(xz\right)^2\right)^{j/2-1} \\
 & = x^{2} {{}_{2}F_{1}\left(\begin{matrix} \frac{1}{2},1 - \frac{j}{2} \\ \frac{3}{2} \end{matrix}\middle| {x^{2} } \right)}
-+ \frac{\left( 1-x^2\right)^{j/2}-1}{j}.
++ \frac{\left( 1-x^2\right)^{j/2}-1}{j},
 \end{align}
+whith ${}_2 F_1 $ being the hypergeometric function.
 Resulting in 
 \begin{align}
 V_{exc}  & =  \sum_{j=0}^{n-k}
@@ -1157,12 +1147,21 @@ Hence,
 \prod_{j=k+1}^n \hat{O}_j \delta(f) =  \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} 2r \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}, 
 \end{align}
 and
-\begin{align}
-A_{col} = \sqrt{2} \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1} \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right)  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)} 2r \prod_{j=0}^k \hat{O}_j \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}
+\begin{align}\label{areaOschoq}
+  A_{col} = \sqrt{2} \sum_{m=0}^{n-k} (-1)^{m} 2^{n-k-m+1}
+  \frac{\pi^\frac{n-k-m}{2}}{\Gamma \left( \frac{n-k+m}{2}\right)}
+  \sum_{i_1< \ldots <i_m } \left( \prod_{l \notin \lbrace i_1, \ldots i_m \rbrace} a_l \right) 
+  2r \prod_{j=0}^k \hat{O}_j \left( 4r^2 - \sum_{j=0}^k z_j^2 \right)^{m/2 + n/2 -k/2 -1} \indicator{\sqrt{\sum_{j=0}^{k} z_j^2}<2r}
 \end{align}
 
-Again, we are unable to find a closed form expression for general $k$, so we limit ourselves to $k=0,1$. For $k=0$ we regain the expression of the main text, while if
-$k=1$ we have to deal with the last part, where the integral operator is
+Again, we are unable to find a closed form expression for general $k$, so we limit ourselves to $k=0,1$. For $k=0$ we regain the expression of the main text.
+To arrive at it, we have to take into account that the integral operators
+$\hat{O_j}$ applied ``zero times'' is the identity operator, and that
+\begin{equation}
+(4r^2)^{\frac{m+n-k}{2}-1}=(2r)^{m+n-k-2}  
+\end{equation}
+in the rightmost part of the expression \ref{areaOschoq}.
+For  $k=1$ we have to deal with the last part, where the integral operator is
 still hanging.
 
 \begin{equation}
@@ -1170,9 +1169,24 @@ still hanging.
   = \int_{-2a_1}^{2a_1} \rd z_1 (4r^2-z_1^2)^{\frac{m+n-3}{2}}\indicator{\sqrt{ z_j^2}<2r}
 \end{equation}
 
-The limits are reduced to $ (-r\sqrt{2}, +r\sqrt{2} )$ because $4r>h_1$. Then, again,
+Remember that  $r>a_1$. Then, again,
 this expression cannot be put in closed form in general. If $n=3$, then we have
-the terms for $m \in [0, 1, 2] $. It is more or less feasible.
+the terms for $m \in [0, 1, 2] $. These are
+\begin{align}
+  m&=0 \; & \hat{O}_1 (4r^2-z_1^2)^0 &= 4 a_1 \\
+  m&=1 \; &\hat{O}_1 (4r^2-z_1^2)^{1/2} &= 4r^2 \arcsin(a_1/r) + 4a_1 \sqrt{r^2-a_1^2} \\
+  m&=2 \; &\hat{O}_1 (4r^2-z_1^2) &= 16(r^2a_1 -a_1^3/3)
+\end{align}
+After some algebra we end with
+\begin{equation}
+  \begin{split}
+    \frac{A_{col}}{\sqrt{2}}=64 \bigr( \pi a_1^2a_2 a_3 r \\
+    - r (a_1 a_2 +a_2a_2 +a_3a_1)(r^2 \arcsin(a/r) + a\sqrt{r^2-a^2}) \\
+    (a_1+a_2+a_3)(r^3-a_1^3/3)
+    \bigl)
+  \end{split}
+\end{equation}
+Compare this last expression with \ref{col3dnormal}.
 
 We would put the other derivations here, but we ran out of \LaTeX.
 
